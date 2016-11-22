@@ -24,11 +24,11 @@ configure-stamp:
 	# Add here commands to configure the package.
 	if [ -f bootstrap.sh ]; then $(CURDIR)/bootstrap.sh; fi
 	$(CURDIR)/configure --prefix=/usr --with-c_glib	\
-																	--without-erlang	\
-																	--without-ruby	\
-																	--without-php	\
-																	--without-csharp	\
-																	--without-perl
+	--without-erlang	\
+	--without-ruby	\
+	--without-php	\
+	--without-csharp	\
+	--without-perl
 
 	touch configure-stamp
 
