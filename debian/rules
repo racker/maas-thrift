@@ -23,7 +23,12 @@ configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 	if [ -f bootstrap.sh ]; then $(CURDIR)/bootstrap.sh; fi
-	$(CURDIR)/configure --prefix=/usr --with-c_glib --without-erlang
+	$(CURDIR)/configure --prefix=/usr --with-c_glib	\
+																	--without-erlang	\
+																	--without-ruby	\
+																	--without-php	\
+																	--without-csharp	\
+																	--without-perl
 
 	touch configure-stamp
 
@@ -75,9 +80,6 @@ build-indep-stamp: configure-stamp
 	# Ruby
 	$(MAKE) -C $(CURDIR)/lib/rb
 
-	# Perl
-	$(MAKE) -C $(CURDIR)/lib/perl INSTALLDIRS=vendor
-
 	touch $@
 
 clean:
@@ -122,9 +124,6 @@ install-indep:
 	mkdir -p $(CURDIR)/debian/libthrift-cil/usr/lib/cli/thrift/ && \
 	cp $(CURDIR)/lib/csharp/Thrift.dll \
 		$(CURDIR)/debian/libthrift-cil/usr/lib/cli/thrift/Thrift.dll
-
-	# Perl
-	$(MAKE) -C $(CURDIR)/lib/perl install DESTDIR=$(CURDIR)/debian/libthrift-perl/usr
 
 	dh_install -i
 
