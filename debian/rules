@@ -57,11 +57,6 @@ build-arch-stamp: configure-stamp
         $$py-dbg setup.py build; \
     done
 
-	# PHP
-	cd $(CURDIR)/lib/php/src/ext/thrift_protocol && \
-		phpize && \
-		./configure && make
-
 	touch $@
 
 build-indep: build-indep-stamp
@@ -120,10 +115,6 @@ install-indep:
 	cp -r $(CURDIR)/lib/rb/lib/thrift \
 		$(CURDIR)/debian/ruby-thrift/usr/lib/ruby/1.9.1
 
-	# C#
-	mkdir -p $(CURDIR)/debian/libthrift-cil/usr/lib/cli/thrift/ && \
-	cp $(CURDIR)/lib/csharp/Thrift.dll \
-		$(CURDIR)/debian/libthrift-cil/usr/lib/cli/thrift/Thrift.dll
 
 	dh_install -i
 
@@ -154,11 +145,6 @@ install-arch:
 	find $(CURDIR)/debian/python-thrift-dbg -name "*.py" -print0 | xargs -0 rm -f
 	find $(CURDIR)/debian/python-thrift-dbg -name "*.egg-info" -print0 | xargs -0 rm -rf
 	find $(CURDIR)/debian/python-thrift-dbg -depth -type d -empty -exec rmdir {} \;
-
-	# PHP
-	mkdir -p $(CURDIR)/debian/php5-thrift
-	cd $(CURDIR)/lib/php && \
-		$(MAKE) DESTDIR=$(CURDIR)/debian/php5-thrift install
 
 	# C++ and C (glib)
 	mkdir -p $(CURDIR)/debian/tmp; \
